@@ -1,0 +1,21 @@
+{
+  "name"         : "smellyapp-web",
+  "version"      : "0.0.1",
+  "description"  : "Smelly app, a sample application to train cyber security students to search for security breaches",
+  "main"         : "index.js",
+  "author"       : "JP Gouigoux <jp.gouigoux@free.fr>",
+  "license"      : "MIT",
+  "repository"   : {
+    "type" : "git",
+    "url" : "git://github.com/ensibs-cybersec/smellyapp.git"
+  },
+  "dependencies" : {
+    "express"         : "~4.7.2",
+    "mongoose"        : "~3.8.13",
+    "morgan"          : "~1.1.1",
+    "body-parser"     : "~1.4.3",
+    "method-override" : "~2.1.1",
+    "md5"             : "~2.0.0",
+    "cookie-parser"   : "~1.4.0"
+  }
+}

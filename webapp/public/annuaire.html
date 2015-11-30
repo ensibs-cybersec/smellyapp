@@ -1,0 +1,50 @@
+<!doctype html>
+<html ng-app="mortgageSampleApp">
+
+<head>
+    <title>Smelly App</title>
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"></script>
+    <script src="./app.js"></script>
+</head>
+
+<body ng-controller="mainController">
+    <div class="container">
+    
+        <!--<div class="checkbox" ng-repeat="mortgage in mortgages">
+            <label>
+                <input type="checkbox"> {{ mortgage }}
+            </label>
+        </div>-->
+
+        <div class="checkbox" ng-repeat="personne in personnes">
+            <label>
+                <input type="checkbox"> {{ personne.lastname }}
+            </label>
+        </div>
+
+        <div id="creating" class="col-sm-5">
+            <form>
+                <div class="form-group">
+                    <input type="text" class="form-control input-lg" placeholder="Prénom" ng-model="createForm.firstname" required>Prénom</input>
+                    <input type="text" class="form-control input-lg" placeholder="Nom" ng-model="createForm.lastname" required>Nom</input>
+                </div>
+                <button type="submit" class="btn btn-primary btn-lg" ng-click="createMortgage()">Create</button>
+            </form>
+        </div>
+        <!--<div id="reporting" class="col-sm-5">
+            <form>
+                <div class="form-group">
+                    <input type="text" class="form-control input-lg" placeholder="Reference" ng-model="reportForm.reference" required>Reference</input>
+                    <input type="text" class="form-control input-lg" placeholder="Decimal value (ex: 50000)" ng-model="reportForm.repaid" required>Amount repaid</input>
+                    <input type="text" class="form-control input-lg" placeholder="Decimal value (ex: 0.025)" ng-model="reportForm.newRate" required>Replacement fixed rate</input>
+                    <input type="text" class="form-control input-lg" placeholder="Email address" ng-model="reportForm.email" required>Report receiver's address</input>
+                </div>
+                <button type="submit" class="btn btn-primary btn-lg" ng-click="sendReport()">Send report</button>
+	        <label>{{feedbackMessage}}</label>
+            </form>
+        </div>-->
+    </div>
+</body>
+
+</html>
