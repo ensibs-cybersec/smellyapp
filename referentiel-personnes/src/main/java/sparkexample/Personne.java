@@ -7,14 +7,18 @@ public class Personne {
 	private Integer id;
 	private String nom;
 	private String prenom;
-	//private Date dateNaissance;
+	private Date dateNaissance;
 
+	public Personne() {
+		super();
+	}
+	
 	public Personne(Integer id, String nom, String prenom) {
 		super();
 		this.id = id;
 		this.nom = nom;
 		this.prenom = prenom;
-		//this.dateNaissance = dateNaissance;
+		this.dateNaissance = dateNaissance;
 	}
 	
 	public Integer getId() {
@@ -41,11 +45,11 @@ public class Personne {
 		this.prenom = prenom;
 	}
  
-// 	public Date getDateNaissance() {
-// 		return dateNaissance;
-// 	}
-// 
-// 	public void setDateNaissance(Date dateNaissance) {
-// 		this.dateNaissance = dateNaissance;
-// 	}
+	public Date getDateNaissance() {
+		return dateNaissance;
+	}
+
+	public void setDateNaissance(Date dateNaissance) {
+		this.dateNaissance = dateNaissance;
+	}
 }

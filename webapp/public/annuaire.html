@@ -17,10 +17,15 @@
             </label>
         </div>-->
 
-        <div class="checkbox" ng-repeat="personne in personnes">
-            <label>
-                <input type="checkbox"> {{ personne.lastname }}
-            </label>
+        <div id="reporting" class="col-sm-5">
+            <div class="checkbox" ng-repeat="personne in personnes">
+                <label>
+                    <input type="checkbox"> {{ personne.lastname }}
+                </label>
+            </div>
+            <ul ng-repeat="personne in personnes">
+                <li>{{ personne.firstname }} {{ personne.lastname }}</li>
+            </ul>
         </div>
 
         <div id="creating" class="col-sm-5">
@@ -28,6 +33,7 @@
                 <div class="form-group">
                     <input type="text" class="form-control input-lg" placeholder="Prénom" ng-model="createForm.firstname" required>Prénom</input>
                     <input type="text" class="form-control input-lg" placeholder="Nom" ng-model="createForm.lastname" required>Nom</input>
+                    <md-datepicker ng-model="createForm.birthdate" placeholder="Date de naissance"></md-datepicker>
                 </div>
                 <button type="submit" class="btn btn-primary btn-lg" ng-click="createMortgage()">Create</button>
             </form>

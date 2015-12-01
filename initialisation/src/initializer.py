@@ -13,9 +13,9 @@ def init():
         cursor.execute('DROP DATABASE IF EXISTS test')
         cursor.execute('CREATE DATABASE test')
         cursor.execute('USE test')
-        cursor.execute('CREATE TABLE personnes (id int unsigned NOT NULL AUTO_INCREMENT, lastname varchar(50), firstname varchar(50), PRIMARY KEY (id))')
-        cursor.execute("INSERT INTO personnes VALUES (1, 'Lagaffe', 'Gaston')")
-        cursor.execute("INSERT INTO personnes VALUES (2, 'Gouigoux', 'Jean-Philippe')")
+        cursor.execute('CREATE TABLE personnes (id INT UNSIGNED NOT NULL AUTO_INCREMENT, lastname VARCHAR(50), firstname VARCHAR(50), birthdate DATETIME, PRIMARY KEY (id))')
+        cursor.execute("INSERT INTO personnes VALUES (1, 'Lagaffe', 'Gaston', '1970-01-01')")
+        cursor.execute("INSERT INTO personnes VALUES (2, 'Gouigoux', 'Jean-Philippe', '1975-01-01')")
         conn.commit();
         conn.close();
 

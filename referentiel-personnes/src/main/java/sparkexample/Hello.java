@@ -10,6 +10,8 @@ import java.net.HttpURLConnection;
 import java.util.List;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
+import java.text.SimpleDateFormat;
+import java.text.ParseException;
 
 public class Hello {
 
@@ -29,50 +31,42 @@ public class Hello {
 				sb.append(",");
 				sb.append("{");
 				sb.append("\"id\": \"").append(p.getId()).append("\", ");
-				sb.append("\"name\": \"").append(p.getNom()).append("\", ");
-				sb.append("\"lastname\": \"").append(p.getPrenom()).append("\"");
+				sb.append("\"firstname\": \"").append(p.getNom()).append("\", ");
+				sb.append("\"lastname\": \"").append(p.getPrenom()).append("\", ");
+				sb.append("\"birthdate\": \"").append(p.getDateNaissance()).append("\"");
 				sb.append("}");
 			}
 			sb.deleteCharAt(1);
 			sb.append("]");
 			return sb.toString();
-			
-			//return "[{ \"mode\": \"SHA-256\", \"value\": \"admin\", \"hash\": \"8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918\" },"
-			//+ "{ \"mode\": \"MD5\", \"value\": \"password\", \"hash\": \"5f4dcc3b5aa765d61d8327deb882cf99\" }]";
 		});
 
         post("/api/personnes", (request, response) -> {
 			
 			 final String content = request.body();
-			 System.out.println("CONTENU POST PERSONNES : " + content);
-			 
-			 String nomFamille = "";
-			 Pattern rechNom = Pattern.compile("\"lastname\": \"([a-zA-Z]+)\"");
-			 Matcher corresp = rechNom.matcher(content);
+			 Personne input = new Personne();
+
+			 Matcher corresp = Pattern.compile("\"lastname\": \"([a-zA-Z]+)\"").matcher(content);
 			 if (corresp.find()) {
-			 	nomFamille = corresp.group(1);
+			 	 input.setNom(corresp.group(1));
 			 }
 			 
-			 System.out.println("TEST 0 : " + Pattern.compile("(a((b)(c)))").matcher("abc").find());
-			 System.out.println("TEST 1 : " + Pattern.compile("lastname").matcher(content).find());
-			 System.out.println("TEST 1 : " + Pattern.compile("\"lastname\"").matcher(content).find());
-			 System.out.println("TEST 1 : " + Pattern.compile("\"lastname\": \"").matcher(content).find());
-			 System.out.println("TEST 1 : " + Pattern.compile("\"lastname\": \".*\"").matcher(content).find());
-			 
-			 String prenom = "";
-			 Pattern rechPrenom = Pattern.compile("\"firstname\": \"([a-zA-Z]+)\"");
-			 corresp = rechPrenom.matcher(content);
+			 corresp = Pattern.compile("\"firstname\": \"([a-zA-Z]+)\"").matcher(content);
 			 if (corresp.find()) {
-			 	prenom = corresp.group(1);
+			 	 input.setPrenom(corresp.group(1));
 			 }
 			 
-			 if (nomFamille.length() == 0 || prenom.length() == 0) {
-				 System.out.println("Error in the JSON describing the person to insert");
-				 return "Error in the JSON describing the person to insert";
+			 corresp = Pattern.compile("\"firstname\": \"([0-9/]+)\"").matcher(content);
+			 if (corresp.find()) {
+				 SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
+				 try {
+				 	 input.setDateNaissance(formatter.parse(corresp.group(1)));
+				 } catch (ParseException e) {
+					 e.printStackTrace();
+				 }
 			 }
 			 
 			 DBAccess connexion = new DBAccess();
-			 Personne input = new Personne(0, nomFamille, prenom);
 			 Personne result = connexion.createPersonne(input);
 			 System.out.println("RETOUR ID PERSONNE : " + result.getId().toString());
 			 return result.getId().toString();
