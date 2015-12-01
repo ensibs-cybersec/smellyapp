@@ -11,18 +11,7 @@
 <body ng-controller="mainController">
     <div class="container">
     
-        <!--<div class="checkbox" ng-repeat="mortgage in mortgages">
-            <label>
-                <input type="checkbox"> {{ mortgage }}
-            </label>
-        </div>-->
-
         <div id="reporting" class="col-sm-5">
-            <div class="checkbox" ng-repeat="personne in personnes">
-                <label>
-                    <input type="checkbox"> {{ personne.lastname }}
-                </label>
-            </div>
             <ul ng-repeat="personne in personnes">
                 <li>{{ personne.firstname }} {{ personne.lastname }}</li>
             </ul>
