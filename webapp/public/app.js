@@ -21,6 +21,8 @@ angular.module('mortgageSampleApp')
 angular.module('mortgageSampleApp')
   .controller('mainController', ['$scope', '$http', 'Mortgages', function($scope, $http, Mortgages) {
 
+    //$scope.birthdate = new Date(2015, 1, 25);
+    
     Mortgages.get()
       .success(function(data) {
         $scope.mortgages = data;
@@ -29,6 +31,7 @@ angular.module('mortgageSampleApp')
     Mortgages.getPersonnes()
       .success(function(data) {
         $scope.personnes = data;
+        //$scope.birthdate = $filter('date')(new Date(),'yyyy-MM-dd');
       });
 
     /**

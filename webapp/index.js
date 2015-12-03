@@ -147,7 +147,7 @@ app.post('/api/report', function(req, res) {
 // 	});
 // });
 app.post('/api/mortgages', function(req, res) {
-	var contentString = '{\"lastname\": \"' + req.body.lastname + '\", \"firstname\": \"' + req.body.firstname + '\"}';
+	var contentString = '{\"lastname\": \"' + req.body.lastname + '\", \"firstname\": \"' + req.body.firstname + '\", \"birthdate\": \"' + req.body.birthdate + '\"}';
 	var headers = {
 		'Content-Type': 'application/json',
 		'Content-Length': contentString.length

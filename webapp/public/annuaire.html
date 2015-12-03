@@ -13,7 +13,7 @@
     
         <div id="reporting" class="col-sm-5">
             <ul ng-repeat="personne in personnes">
-                <li>{{ personne.firstname }} {{ personne.lastname }}</li>
+                <li>{{ personne.firstname }} {{ personne.lastname }} {{personne.birthdate | date : 'dd/MM/yyyy'}}</li>
             </ul>
         </div>
 
@@ -22,7 +22,11 @@
                 <div class="form-group">
                     <input type="text" class="form-control input-lg" placeholder="Prénom" ng-model="createForm.firstname" required>Prénom</input>
                     <input type="text" class="form-control input-lg" placeholder="Nom" ng-model="createForm.lastname" required>Nom</input>
-                    <md-datepicker ng-model="createForm.birthdate" placeholder="Date de naissance"></md-datepicker>
+                    <input type="date" class="form-control input-lg" placeholder="yyyy-MM-dd" ng-model="createForm.birthdate" required>Date de naissance</input>
+                    <!--<md-content>
+                        <h4>Date picker</h4>
+                        <md-datepicker ng-model="birthdate" placeholder="Date de naissance"></md-datepicker>
+                    </md-content>-->
                 </div>
                 <button type="submit" class="btn btn-primary btn-lg" ng-click="createMortgage()">Create</button>
             </form>

@@ -34,7 +34,8 @@ public class DBAccess  {
 		
 		try {
 			con = getConnexion();
-			stmt = con.prepareStatement("INSERT INTO personnes (lastname, firstname) VALUES ('" + p.getNom() + "', '" + p.getPrenom() + "')", Statement.RETURN_GENERATED_KEYS);
+			stmt = con.prepareStatement("INSERT INTO personnes (lastname, firstname, birthdate) VALUES ('" + p.getNom() + "', '" + p.getPrenom() + "', ?)", Statement.RETURN_GENERATED_KEYS);
+			stmt.setDate(1, new java.sql.Date(p.getDateNaissance().getTime()));
 			stmt.executeUpdate();
 			ResultSet rset = stmt.getGeneratedKeys();
 			if (rset.next()) {
@@ -43,6 +44,7 @@ public class DBAccess  {
 
 		} catch (SQLException e) {
 			e.printStackTrace();
+			//System.out.println("ERROR : " + e.toString());
 		} finally {
 
 			if (stmt != null) {
@@ -154,9 +156,9 @@ public class DBAccess  {
 		final Integer id = rset.getInt("id");
 		final String nom = rset.getString("lastname");
 		final String prenom = rset.getString("firstname");
-		//final Date dateNaissance = rset.getDate("date_naissance");
+		final Date dateNaissance = rset.getDate("birthdate");
 
-		final Personne eleve = new Personne(id, nom, prenom);
+		final Personne eleve = new Personne(id, nom, prenom, dateNaissance);
 		return eleve;
 
 	}

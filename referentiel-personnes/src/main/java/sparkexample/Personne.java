@@ -13,7 +13,7 @@ public class Personne {
 		super();
 	}
 	
-	public Personne(Integer id, String nom, String prenom) {
+	public Personne(Integer id, String nom, String prenom, Date dateNaissance) {
 		super();
 		this.id = id;
 		this.nom = nom;

@@ -56,9 +56,9 @@ public class Hello {
 			 	 input.setPrenom(corresp.group(1));
 			 }
 			 
-			 corresp = Pattern.compile("\"firstname\": \"([0-9/]+)\"").matcher(content);
+			 corresp = Pattern.compile("\"birthdate\": \"([0-9\\-]+)\"").matcher(content);
 			 if (corresp.find()) {
-				 SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
+				 SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 				 try {
 				 	 input.setDateNaissance(formatter.parse(corresp.group(1)));
 				 } catch (ParseException e) {
