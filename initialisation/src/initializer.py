@@ -23,7 +23,8 @@ def init():
 
     except MySQLdb.Error, e:
         print "Error %d: %s" % (e.args[0], e.args[1])
-
+        return "Error %d: %s" % (e.args[0], e.args[1])
+        
     return "Database 'test' initialized with dummy individuals"
 
 @app.route('/data', methods=['GET'])
