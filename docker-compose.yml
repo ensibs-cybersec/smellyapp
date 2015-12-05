@@ -4,6 +4,8 @@ sql:
   image: "mysql:5.7.9"
   environment:
     - "MYSQL_ROOT_PASSWORD=Ensibs56"
+  ports:
+    - "3306:3306"
 init:
   build: initialisation
   links:
