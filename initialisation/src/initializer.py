@@ -8,7 +8,7 @@ app = Flask(__name__)
 def init():
 
     try:
-        conn = MySQLdb.connect (host = "mysql", user = "root", passwd = "Ensibs56", db = "test")
+        conn = MySQLdb.connect (host = "mysql", user = "ensibs", passwd = "Ensibs56", db = "test")
         cursor = conn.cursor()
         # cursor.execute('DROP DATABASE IF EXISTS test')
         # cursor.execute('CREATE DATABASE test')
@@ -16,8 +16,8 @@ def init():
         cursor.execute('CREATE TABLE personnes (id INT UNSIGNED NOT NULL AUTO_INCREMENT, lastname VARCHAR(50), firstname VARCHAR(50), birthdate DATETIME, PRIMARY KEY (id))')
         cursor.execute("INSERT INTO personnes VALUES (1, 'Lagaffe', 'Gaston', '1970-01-01')")
         cursor.execute("INSERT INTO personnes VALUES (2, 'Gouigoux', 'Jean-Philippe', '1975-01-01')")
-        cursor.execute("GRANT ALL PRIVILEGES ON *.* TO 'root'@'%'")
-        cursor.execute("FLUSH PRIVILEGES")
+        # cursor.execute("GRANT ALL PRIVILEGES ON *.* TO 'root'@'%'")
+        # cursor.execute("FLUSH PRIVILEGES")
         conn.commit();
         conn.close();
 

@@ -3,6 +3,8 @@ db:
 sql:
   image: "mysql:5.7.9"
   environment:
+    - "MYSQL_USER=ensibs"
+    - "MYSQL_PASSWORD=Ensibs56"
     - "MYSQL_ROOT_PASSWORD=Ensibs56"
     - "MYSQL_DATABASE=test"
   ports:

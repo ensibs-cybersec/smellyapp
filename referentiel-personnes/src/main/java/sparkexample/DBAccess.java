@@ -14,7 +14,7 @@ public class DBAccess  {
 
 	private final static String URL = "jdbc:mysql://mysql:3306/test";
 
-	private final static String LOGIN = "root";
+	private final static String LOGIN = "ensibs";
 
 	private final static String PASSWORD = "Ensibs56";
 
