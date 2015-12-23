@@ -30,6 +30,8 @@ angular.module('mortgageSampleApp')
 
     Mortgages.getPersonnes()
       .success(function(data) {
+        console.log("getPersonnes RESULT");
+        console.log(data);
         $scope.personnes = data;
         //$scope.birthdate = $filter('date')(new Date(),'yyyy-MM-dd');
       });
@@ -37,14 +39,21 @@ angular.module('mortgageSampleApp')
     /**
      * Creates the mortgage into persistance from the values in the view
      */
-    $scope.createMortgage = function() {
+    $scope.createPersonne = function() {
       if (angular.isObject($scope.createForm)) {
         Mortgages.create($scope.createForm)
           .success(function(data) {
+            console.log("succes 1")
             // $scope.reportForm = $scope.reportForm || {};
             // $scope.reportForm.reference = $scope.createForm.text;
-            // $scope.createForm = {};
-            $scope.mortgages = data;
+            $scope.createForm = {};
+            console.log("succes 2")
+//            $scope.mortgages = data;
+            console.log("createPersonne RESULT");
+            console.log(data);
+            $scope.personnes = data;
+            console.log("succes 3")
+// MARCHE PAS            Mortgages.getPersonnes().success(function(data) { $scope.personnes = data; });
           });
       }
     };

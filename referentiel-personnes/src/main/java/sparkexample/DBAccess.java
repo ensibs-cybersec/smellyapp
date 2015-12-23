@@ -29,6 +29,7 @@ public class DBAccess  {
 
 	public Personne createPersonne(Personne p) {
 
+		System.out.println("==============> createPersonne en JAVA avec " + p.getNom() + " comme nom");
 		Connection con = null;
 		PreparedStatement stmt = null;
 		

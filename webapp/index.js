@@ -87,7 +87,9 @@ app.post('/api/report', function(req, res) {
 		repaymentRequest.end();
 	});
 });
-app.get('/api/personnes', function(req, res) {
+
+function getAllPersonnes(res) {
+	console.log('====================> Appel de getAllPersonnes');
 	var options = {
 		host: 'personnes',
 		port: 5000,
@@ -111,6 +113,10 @@ app.get('/api/personnes', function(req, res) {
     }).on('error', function(err) {
         console.error('Error with the request:', err.message);
     });
+};
+
+app.get('/api/personnes', function(req, res) {
+    getAllPersonnes(res);
 });
 
 app.post('/api/report', function(req, res) {
@@ -146,7 +152,8 @@ app.post('/api/report', function(req, res) {
 // 		getMortgages(res);
 // 	});
 // });
-app.post('/api/mortgages', function(req, res) {
+
+function createPersonne(req) {
 	var contentString = '{\"lastname\": \"' + req.body.lastname + '\", \"firstname\": \"' + req.body.firstname + '\", \"birthdate\": \"' + req.body.birthdate + '\"}';
 	var headers = {
 		'Content-Type': 'application/json',
@@ -161,10 +168,13 @@ app.post('/api/mortgages', function(req, res) {
 	};
 	var repaymentRequest = http.request(options);
 	repaymentRequest.write(contentString);
-	repaymentRequest.end();
+	repaymentRequest.end();	
+};
 
-		
-	// Rafficher la liste à la fin
+app.post('/api/mortgages', function(req, res) {
+	createPersonne(req).then(function() {
+		getAllPersonnes(res);
+	});
 });
 app.get('/logout', function(req, res) {
 	res.clearCookie('connected');

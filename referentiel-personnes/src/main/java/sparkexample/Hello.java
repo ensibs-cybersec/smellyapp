@@ -38,6 +38,9 @@ public class Hello {
 			}
 			sb.deleteCharAt(1);
 			sb.append("]");
+			
+			System.out.println("========================> /api/personnes en JAVA renvoie " + sb.toString());
+			
 			return sb.toString();
 		});
 
