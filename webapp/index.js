@@ -6,6 +6,8 @@ var port = process.env.PORT || 8080;
 var http = require('http');
 var md5 = require('md5');
 
+var request = require('request');
+
 var database = {
 	url : 'mongodb://mongo:27017'
 }
@@ -153,8 +155,10 @@ app.post('/api/report', function(req, res) {
 // 	});
 // });
 
-function createPersonne(req) {
-	var contentString = '{\"lastname\": \"' + req.body.lastname + '\", \"firstname\": \"' + req.body.firstname + '\", \"birthdate\": \"' + req.body.birthdate + '\"}';
+function createPersonneOLD(personne, callback) {
+	//var contentString = '{\"lastname\": \"' + personne.lastname + '\", \"firstname\": \"' 
+	  + personne.firstname + '\", \"birthdate\": \"' 
+	  + personne.birthdate + '\"}';
 	var headers = {
 		'Content-Type': 'application/json',
 		'Content-Length': contentString.length
@@ -166,16 +170,23 @@ function createPersonne(req) {
 		method: 'POST',
 		headers: headers
 	};
-	var repaymentRequest = http.request(options);
+	var repaymentRequest = http.request(options, callback);
 	repaymentRequest.write(contentString);
-	repaymentRequest.end();	
+	repaymentRequest.end();		
+};
+
+function createPersonne(personne, callback) {
+	var query = { json: { lastname: personne.lastname, firstname: personne.firstname, birthdate: personne.birthdate }, url : 'http://personnes:5000/api/personnes', method : 'POST' };
+	request(query, callback);	
 };
 
 app.post('/api/mortgages', function(req, res) {
-	createPersonne(req).then(function() {
-		getAllPersonnes(res);
+	createPersonne(req.body, function(error, response) { 
+		if (error) return res.status(500).send(error);
+		res.send(201, response.body);
 	});
 });
+
 app.get('/logout', function(req, res) {
 	res.clearCookie('connected');
 	res.send('<p>disconnected</p>');

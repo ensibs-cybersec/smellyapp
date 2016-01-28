@@ -7,7 +7,7 @@ angular.module('mortgageSampleApp')
         return $http.get('/api/mortgages');
       },
       getPersonnes: function() {
-        return $http.get('/api/personnes');
+        return $http.get('/api/personnes').then(function(response) { return response.data; });
       },
       report: function(reportData) {
         return $http.post('/api/report', reportData);
@@ -19,7 +19,7 @@ angular.module('mortgageSampleApp')
   }]);
 
 angular.module('mortgageSampleApp')
-  .controller('mainController', ['$scope', '$http', 'Mortgages', function($scope, $http, Mortgages) {
+  .controller('mainController', ['$scope', 'Mortgages', function($scope, Mortgages) {
 
     //$scope.birthdate = new Date(2015, 1, 25);
     
@@ -29,33 +29,29 @@ angular.module('mortgageSampleApp')
       });
 
     Mortgages.getPersonnes()
-      .success(function(data) {
+      .then(function(data) {
         console.log("getPersonnes RESULT");
         console.log(data);
         $scope.personnes = data;
         //$scope.birthdate = $filter('date')(new Date(),'yyyy-MM-dd');
+	return;
       });
 
     /**
      * Creates the mortgage into persistance from the values in the view
      */
-    $scope.createPersonne = function() {
-      if (angular.isObject($scope.createForm)) {
-        Mortgages.create($scope.createForm)
-          .success(function(data) {
-            console.log("succes 1")
-            // $scope.reportForm = $scope.reportForm || {};
-            // $scope.reportForm.reference = $scope.createForm.text;
-            $scope.createForm = {};
-            console.log("succes 2")
-//            $scope.mortgages = data;
-            console.log("createPersonne RESULT");
-            console.log(data);
-            $scope.personnes = data;
-            console.log("succes 3")
-// MARCHE PAS            Mortgages.getPersonnes().success(function(data) { $scope.personnes = data; });
-          });
-      }
+    $scope.createPersonne = function(personne) {
+        Mortgages.create(personne)
+          .then(function(data) {
+            return Mortgages.getPersonnes();
+          })
+	  .then(function(personnes) {
+	     $scope.personnes = personnes;
+	     $scope.personne = {};
+	  })
+	  .catch(function(error) {
+	     console.log(error);
+	  });
     };
 
     // /**

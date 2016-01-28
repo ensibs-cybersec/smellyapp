@@ -47,19 +47,22 @@ public class Hello {
         post("/api/personnes", (request, response) -> {
 			
 			 final String content = request.body();
+			 
+			 System.out.println("CONTENT : " + content);
+			 
 			 Personne input = new Personne();
 
-			 Matcher corresp = Pattern.compile("\"lastname\": \"([a-zA-Z]+)\"").matcher(content);
+			 Matcher corresp = Pattern.compile("\"lastname\":\"([a-zA-Z]+)\"").matcher(content);
 			 if (corresp.find()) {
 			 	 input.setNom(corresp.group(1));
 			 }
 			 
-			 corresp = Pattern.compile("\"firstname\": \"([a-zA-Z]+)\"").matcher(content);
+			 corresp = Pattern.compile("\"firstname\":\"([a-zA-Z]+)\"").matcher(content);
 			 if (corresp.find()) {
 			 	 input.setPrenom(corresp.group(1));
 			 }
 			 
-			 corresp = Pattern.compile("\"birthdate\": \"([0-9\\-]+)\"").matcher(content);
+			 corresp = Pattern.compile("\"birthdate\":\"([0-9\\-]+)\"").matcher(content);
 			 if (corresp.find()) {
 				 SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 				 try {
