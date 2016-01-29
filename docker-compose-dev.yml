@@ -1,0 +1,32 @@
+db:
+   image: "mongo:3.0.3"
+sql:
+  image: "mysql:5.7.9"
+  environment:
+    - "MYSQL_USER=ensibs"
+    - "MYSQL_PASSWORD=Ensibs56"
+    - "MYSQL_ROOT_PASSWORD=Ensibs56"
+    - "MYSQL_DATABASE=test"
+  ports:
+    - "3306:3306"
+init:
+  build: initialisation
+  links:
+    - "sql:mysql"  
+  ports:
+    - "5000:5000"
+reftiers:
+  build: referentiel-personnes
+  links:
+     - "sql:mysql"
+  ports:
+    - "88:5000"
+app:
+  build: webapp
+  links:
+    - "db:mongo"
+    - "reftiers:personnes"
+  ports:
+    - "8080:8080"
+  volumes:
+    - "~/Git/smellyapp/webapp:/opt/app:ro"

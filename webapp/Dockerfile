@@ -8,5 +8,7 @@ RUN mkdir -p /opt/app && cp -a /tmp/node_modules /opt/app/
 WORKDIR /opt/app
 ADD . /opt/app
 
+VOLUME /opt/app
+
 EXPOSE 8080
 CMD ["node", "index.js"]
