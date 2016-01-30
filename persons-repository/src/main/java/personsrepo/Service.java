@@ -21,7 +21,7 @@ public class Hello {
 		get("/api/person", (request, response) -> {
 			response.type("application/json");
 			
-			List<Person> persons = new DBAccess().findPersons();
+			List<Person> persons = new Persistence().findPersons();
 			
 			StringBuilder sb = new StringBuilder();
 			sb.append("[");
@@ -66,7 +66,7 @@ public class Hello {
 				 }
 			 }
 			 
-			 Person result = new DBAccess().createPerson(input);
+			 Person result = new Persistence().createPerson(input);
 			 return result.getId().toString();
 		});
     }

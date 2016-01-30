@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class DBAccess  {
+public class Persistence  {
 
 	private final static String URL = "jdbc:mysql://mysql:3306/test";
 	private final static String LOGIN = "ensibs";

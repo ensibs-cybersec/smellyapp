@@ -9,8 +9,8 @@ def init():
     try:
         conn = MySQLdb.connect (host = "mysql", user = "ensibs", passwd = "Ensibs56", db = "test")
         cursor = conn.cursor()
-        cursor.execute('DROP TABLE IF EXISTS PERSON')
-        cursor.execute('CREATE TABLE PERSON (id INT UNSIGNED NOT NULL AUTO_INCREMENT, lastname VARCHAR(50), firstname VARCHAR(50), birthdate DATETIME, PRIMARY KEY (id))')
+        cursor.execute("DROP TABLE IF EXISTS PERSON")
+        cursor.execute("CREATE TABLE PERSON (id INT UNSIGNED NOT NULL AUTO_INCREMENT, lastname VARCHAR(50), firstname VARCHAR(50), birthdate DATETIME, PRIMARY KEY (id))")
         cursor.execute("INSERT INTO PERSON VALUES (1, 'Lagaffe', 'Gaston', '1970-01-01')")
         cursor.execute("INSERT INTO PERSON VALUES (2, 'Gouigoux', 'Jean-Philippe', '1974-12-25')")
         conn.commit();

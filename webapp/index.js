@@ -6,11 +6,6 @@ var http = require('http');
 var md5 = require('md5');
 
 var request = require('request');
-
-var database = {
-	url : 'mongodb://mongo:27017'
-}
-
 var morgan = require('morgan');
 var bodyParser = require('body-parser');
 var methodOverride = require('method-override');
@@ -23,7 +18,7 @@ app.use(cookieParser());
 
 app.get('/api/person', function(req, res) {
 	var options = {
-		host: 'personnes',
+		host: 'persons-directory',
 		port: 5000,
 		path: '/api/person',
 		method: 'GET'
@@ -49,7 +44,7 @@ app.get('/api/person', function(req, res) {
 
 function createPerson(person, callback) {
 	var query = { json: { lastname: person.lastname, firstname: person.firstname, birthdate: person.birthdate },
-        url : 'http://personnes:5000/api/person', 
+        url : 'http://persons-directory:5000/api/person', 
         method : 'POST' };
 	request(query, callback);	
 };
@@ -83,7 +78,7 @@ app.get('/login', function(req, res) {
 
 app.get('*', function(req, res) {
 	if (req.cookies.connected) {
-		res.sendfile('./public/annuaire.html');
+		res.sendfile('./public/directory.html');
 	} else {
 		res.redirect('/login');
 	}
