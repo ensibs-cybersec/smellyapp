@@ -13,7 +13,7 @@ import java.util.regex.Matcher;
 import java.text.SimpleDateFormat;
 import java.text.ParseException;
 
-public class Hello {
+public class Service {
 
     public static void main(String[] args) {
         setPort(5000);
