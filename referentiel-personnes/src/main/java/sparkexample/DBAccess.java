@@ -13,30 +13,25 @@ import java.util.List;
 public class DBAccess  {
 
 	private final static String URL = "jdbc:mysql://mysql:3306/test";
-
 	private final static String LOGIN = "ensibs";
-
 	private final static String PASSWORD = "Ensibs56";
-
-	private final static String QUERY_FIND_ELEVES = "SELECT * FROM personnes ";
-
-	private final static String QUERY_FIND_ELEVES_BY_CLASSE = "SELECT * FROM personnes WHERE lastname = ? ";
+	private final static String QUERY_FIND = "SELECT * FROM PERSON";
+	private final static String QUERY_FIND_PARAM = "SELECT * FROM PERSON WHERE lastname = ? ";
 
 	private Connection getConnexion() throws SQLException {
 		final Connection con = DriverManager.getConnection(URL, LOGIN, PASSWORD);
 		return con;
 	}
 
-	public Personne createPersonne(Personne p) {
-
-		System.out.println("==============> createPersonne en JAVA avec " + p.getNom() + " comme nom");
+	public Person createPerson(Person p) {
+		System.out.println("Calling Java createPerson method with " + p.getLastName() + " as last name");
 		Connection con = null;
 		PreparedStatement stmt = null;
 		
 		try {
 			con = getConnexion();
-			stmt = con.prepareStatement("INSERT INTO personnes (lastname, firstname, birthdate) VALUES ('" + p.getNom() + "', '" + p.getPrenom() + "', ?)", Statement.RETURN_GENERATED_KEYS);
-			stmt.setDate(1, new java.sql.Date(p.getDateNaissance().getTime()));
+			stmt = con.prepareStatement("INSERT INTO PERSON (lastname, firstname, birthdate) VALUES ('" + p.getLastName() + "', '" + p.getFirstName() + "', ?)", Statement.RETURN_GENERATED_KEYS);
+			stmt.setDate(1, new java.sql.Date(p.getBirthDate().getTime()));
 			stmt.executeUpdate();
 			ResultSet rset = stmt.getGeneratedKeys();
 			if (rset.next()) {
@@ -45,13 +40,11 @@ public class DBAccess  {
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-			//System.out.println("ERROR : " + e.toString());
 		} finally {
 
 			if (stmt != null) {
 				try {
-					// Le stmt.close ferme automatiquement le rset
-					stmt.close();
+					stmt.close(); // PreparedStatement.close automatically closes the ResultSet
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
@@ -69,9 +62,8 @@ public class DBAccess  {
 		return p;
 	}
 
-	public List<Personne> findEleves() {
-
-		List<Personne> eleves = new ArrayList<Personne>();
+	public List<Person> findPersons() {
+		List<Person> persons = new ArrayList<Person>();
 
 		Connection con = null;
 		Statement stmt = null;
@@ -79,11 +71,10 @@ public class DBAccess  {
 		try {
 			con = getConnexion();
 			stmt = con.createStatement();
-			final ResultSet rset = stmt.executeQuery(QUERY_FIND_ELEVES);
+			final ResultSet rset = stmt.executeQuery(QUERY_FIND);
 
 			while (rset.next()) {
-				final Personne eleve = rsetToEleve(rset);
-				eleves.add(eleve);
+				persons.add(rsetToPerson(rset));
 			}
 
 		} catch (SQLException e) {
@@ -92,8 +83,7 @@ public class DBAccess  {
 
 			if (stmt != null) {
 				try {
-					// Le stmt.close ferme automatiquement le rset
-					stmt.close();
+					stmt.close(); // PreparedStatement.close automatically closes the ResultSet
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
@@ -108,24 +98,23 @@ public class DBAccess  {
 			}
 		}
 
-		return eleves;
+		return persons;
 	}
 
-	public List<Personne> findElevesByClasse(Integer classe) {
-		List<Personne> eleves = new ArrayList<Personne>();
+	public List<Person> findPersonsByLastName(String requestedLastName) {
+		List<Person> persons = new ArrayList<Person>();
 
 		Connection con = null;
 		PreparedStatement stmt = null;
 
 		try {
 			con = getConnexion();
-			stmt = con.prepareStatement(QUERY_FIND_ELEVES_BY_CLASSE);
-			stmt.setInt(1, classe);
+			stmt = con.prepareStatement(QUERY_FIND_PARAM);
+			stmt.setString(1, requestedLastName);
 
 			final ResultSet rset = stmt.executeQuery();
 			while (rset.next()) {
-				final Personne eleve = rsetToEleve(rset);
-				eleves.add(eleve);
+				persons.add(rsetToPerson(rset));
 			}
 
 		} catch (SQLException e) {
@@ -134,8 +123,7 @@ public class DBAccess  {
 
 			if (stmt != null) {
 				try {
-					// Le stmt.close ferme automatiquement le rset
-					stmt.close();
+					stmt.close(); // PreparedStatement.close automatically closes the ResultSet
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
@@ -150,18 +138,15 @@ public class DBAccess  {
 			}
 		}
 
-		return eleves;
+		return persons;
 	}
 
-	private Personne rsetToEleve(final ResultSet rset) throws SQLException {
-		final Integer id = rset.getInt("id");
-		final String nom = rset.getString("lastname");
-		final String prenom = rset.getString("firstname");
-		final Date dateNaissance = rset.getDate("birthdate");
-
-		final Personne eleve = new Personne(id, nom, prenom, dateNaissance);
-		return eleve;
-
+	private Person rsetToPerson(final ResultSet rset) throws SQLException {
+		return new Person(
+            rset.getInt("id"), 
+            rset.getString("lastname"), 
+            rset.getString("firstname"), 
+            rset.getDate("birthdate"));
 	}
 
 }

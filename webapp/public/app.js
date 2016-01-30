@@ -1,68 +1,39 @@
-angular.module('mortgageSampleApp', []);
+angular.module('smellyApp', []);
 
-angular.module('mortgageSampleApp')
-  .factory('Mortgages', ['$http', function($http) {
+angular.module('smellyApp')
+  .factory('Persons', ['$http', function($http) {
     return {
-      get: function() {
-        return $http.get('/api/mortgages');
+      getPersons: function() {
+        return $http.get('/api/person').then(function(response) { return response.data; });
       },
-      getPersonnes: function() {
-        return $http.get('/api/personnes').then(function(response) { return response.data; });
-      },
-      report: function(reportData) {
-        return $http.post('/api/report', reportData);
-      },
-      create: function(mortgageData) {
-        return $http.post('/api/mortgages', mortgageData);
+      createPerson: function(person) {
+        return $http.post('/api/person', person);
       }
     };
   }]);
 
-angular.module('mortgageSampleApp')
-  .controller('mainController', ['$scope', 'Mortgages', function($scope, Mortgages) {
+angular.module('smellyApp')
+  .controller('mainController', ['$scope', 'Persons', function($scope, Factory) {
 
-    //$scope.birthdate = new Date(2015, 1, 25);
-    
-    Mortgages.get()
-      .success(function(data) {
-        $scope.mortgages = data;
-      });
-
-    Mortgages.getPersonnes()
+    Factory.getPersons()
       .then(function(data) {
-        console.log("getPersonnes RESULT");
-        console.log(data);
-        $scope.personnes = data;
-        //$scope.birthdate = $filter('date')(new Date(),'yyyy-MM-dd');
-	return;
+        $scope.persons = data;
+	    return;
       });
 
-    /**
-     * Creates the mortgage into persistance from the values in the view
-     */
-    $scope.createPersonne = function(personne) {
-        Mortgages.create(personne)
+    $scope.createPerson = function(person) {
+        Factory.createPerson(person)
           .then(function(data) {
-            return Mortgages.getPersonnes();
+            return Factory.getPersons();
           })
-	  .then(function(personnes) {
-	     $scope.personnes = personnes;
-	     $scope.personne = {};
+	  .then(function(persons) {
+	     $scope.persons = persons;
+	     $scope.person = {};
 	  })
 	  .catch(function(error) {
 	     console.log(error);
 	  });
     };
-
-    // /**
-    //  * Generates a report about best repayment strategy for a mortgage
-    //  */
-    // $scope.sendReport = function() {
-    //   if (angular.isObject($scope.reportForm)) {
-    //     Mortgages.report($scope.reportForm);
-    //     $scope.feedbackMessage = "Your report will be sent quickly";
-    //   }
-    // };
 
   }]);
 

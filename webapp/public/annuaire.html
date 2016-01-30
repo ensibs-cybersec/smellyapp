@@ -1,5 +1,5 @@
 <!doctype html>
-<html ng-app="mortgageSampleApp">
+<html ng-app="smellyApp">
 
 <head>
     <title>Smelly App</title>
@@ -12,37 +12,26 @@
     <div class="container">
     
         <div id="reporting" class="col-sm-5">
-            <ul ng-repeat="personne in personnes">
-                <li>{{ personne.firstname }} {{ personne.lastname }} {{personne.birthdate | date : 'dd/MM/yyyy'}}</li>
+            <ul ng-repeat="person in persons">
+                <li>{{ person.firstname }} {{ person.lastname }} {{person.birthdate | date : 'dd/MM/yyyy'}}</li>
             </ul>
         </div>
 
         <div id="creating" class="col-sm-5">
             <form>
                 <div class="form-group">
-                    <input type="text" class="form-control input-lg" placeholder="Prénom" ng-model="personne.firstname" required>Prénom</input>
-                    <input type="text" class="form-control input-lg" placeholder="Nom" ng-model="personne.lastname" required>Nom</input>
-                    <input type="date" class="form-control input-lg" placeholder="yyyy-MM-dd" ng-model="personne.birthdate" required>Date de naissance</input>
+                    <input type="text" class="form-control input-lg" placeholder="Prénom" ng-model="person.firstname" required>Prénom</input>
+                    <input type="text" class="form-control input-lg" placeholder="Nom" ng-model="person.lastname" required>Nom</input>
+                    <input type="date" class="form-control input-lg" placeholder="yyyy-MM-dd" ng-model="person.birthdate" required>Date de naissance</input>
                     <!--<md-content>
                         <h4>Date picker</h4>
                         <md-datepicker ng-model="birthdate" placeholder="Date de naissance"></md-datepicker>
                     </md-content>-->
                 </div>
-                <button type="submit" class="btn btn-primary btn-lg" ng-click="createPersonne(personne)">Create</button>
+                <button type="submit" class="btn btn-primary btn-lg" ng-click="createPerson(person)">Créer</button>
+    	        <label>{{feedbackMessage}}</label>
             </form>
         </div>
-        <!--<div id="reporting" class="col-sm-5">
-            <form>
-                <div class="form-group">
-                    <input type="text" class="form-control input-lg" placeholder="Reference" ng-model="reportForm.reference" required>Reference</input>
-                    <input type="text" class="form-control input-lg" placeholder="Decimal value (ex: 50000)" ng-model="reportForm.repaid" required>Amount repaid</input>
-                    <input type="text" class="form-control input-lg" placeholder="Decimal value (ex: 0.025)" ng-model="reportForm.newRate" required>Replacement fixed rate</input>
-                    <input type="text" class="form-control input-lg" placeholder="Email address" ng-model="reportForm.email" required>Report receiver's address</input>
-                </div>
-                <button type="submit" class="btn btn-primary btn-lg" ng-click="sendReport()">Send report</button>
-	        <label>{{feedbackMessage}}</label>
-            </form>
-        </div>-->
     </div>
 </body>
 

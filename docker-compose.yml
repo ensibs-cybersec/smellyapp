@@ -10,12 +10,12 @@ sql:
   ports:
     - "3306:3306"
 init:
-  build: initialisation
+  build: initialization
   links:
     - "sql:mysql"  
   ports:
     - "5000:5000"
-reftiers:
+refpersons:
   build: referentiel-personnes
   links:
      - "sql:mysql"
@@ -25,6 +25,6 @@ app:
   build: webapp
   links:
     - "db:mongo"
-    - "reftiers:personnes"
+    - "refpersons:personnes"
   ports:
     - "8080:8080"

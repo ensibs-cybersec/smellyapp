@@ -1,5 +1,4 @@
-# mortgage
-## Sample application managing mortgages ##
+# smellyapp
+## Sample application including security failures ##
 
-This is a sample application that has been created to illustrate micro-services architecture for a book about Docker, published at Editions ENI
-
+This sample application has been created to illustrate several programming mistakes that present security risks.
