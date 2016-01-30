@@ -8,6 +8,9 @@ angular.module('smellyApp')
       },
       createPerson: function(person) {
         return $http.post('/api/person', person);
+      },
+      logout: function() {
+        return $http.get('/logout');  
       }
     };
   }]);
@@ -35,5 +38,8 @@ angular.module('smellyApp')
 	  });
     };
 
+    $scope.logout = function() {
+        Factory.logout();
+    };
   }]);
 
