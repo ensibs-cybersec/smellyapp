@@ -56,6 +56,10 @@ app.post('/api/person', function(req, res) {
 	});
 });
 
+app.delete('/api/person', function(req, res) {
+    res.send(501, "Not implemented yet");
+});
+
 app.get('/logout', function(req, res) {
 	res.clearCookie('connected');
 	res.send('<p>disconnected</p>');
