@@ -16,7 +16,7 @@ init:
 refpersons:
   build: persons-repository
   links:
-     - "sql:mysql"
+    - "sql:mysql"
   ports:
     - "88:5000"
 app:
